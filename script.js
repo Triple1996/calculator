@@ -7,7 +7,6 @@ let firstNum;
 let operator;
 let secondNum;
 
-
 function operate (firstNum, secondNum, operator){
 
     switch (operator){
@@ -23,5 +22,4 @@ function operate (firstNum, secondNum, operator){
             console.error("No operator selected");
             break;
     }
-
 }
