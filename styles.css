@@ -1,0 +1,55 @@
+html, body{
+    height: 95%;
+    width: 95%;
+    font-family: system-ui;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#container{
+    height: 600px;
+    width: 450px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding:15px;
+}
+
+#display {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    font-size: 50px;
+    padding:10px;
+    border: 2px solid black;
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+#grid-buttons{
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+button{
+    height:100px;
+    font-family: inherit;
+    font-size: x-large;
+    border-radius: 5px;
+}
+footer {
+    width: 100%;
+    margin: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
