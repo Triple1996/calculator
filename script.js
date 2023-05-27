@@ -1,22 +1,26 @@
+const ALL_CLEAR_TEXT = '0';
+
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
 const equalsBtn = document.querySelector('#equals');
 const clearBtn = document.querySelector('#clear');
+
 const display = document.querySelector('#display');
 
 clearBtn.addEventListener('click', clearDisplay);
 equalsBtn.addEventListener('click', equalFunction);
 
 numberButtons.forEach( button => {
-    button.addEventListener('click', inputNumber)
+    button.addEventListener('click', () => {
+        console.log("test");
+        if (display.textContent == '0') display.textContent = "";
+        display.textContent+=button.textContent;
+    })
 })
+
 operatorButtons.forEach( button =>{
     button.addEventListener('click', inputOperator)
 })
-
-function inputNumber(){
-    display.textContent+=this.textContent;
-}
 
 function inputOperator(){
     console.log(this.textContent + " was clicked!");
@@ -24,7 +28,7 @@ function inputOperator(){
 }
 
 function clearDisplay(){
-    display.textContent = "";
+    display.textContent = ALL_CLEAR_TEXT;
 }
 
 function equalFunction(){
