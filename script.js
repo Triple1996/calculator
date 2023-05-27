@@ -11,6 +11,19 @@ const divide = (a, b) => Number(a)/Number(b);
 
 let displayValue = ALL_CLEAR_TEXT;
 
+const equalsBtn = document.querySelector('#equals');
+equalsBtn.addEventListener('click', equalFunction);
+
+const clearBtn = document.querySelector('#clear');
+clearBtn.addEventListener('click', clearDisplay);
+
+const display = document.querySelector('#display');
+
+const operatorButtons = document.querySelectorAll('.operator');
+operatorButtons.forEach( button =>{
+    button.addEventListener('click', inputOperator)
+})
+
 const numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach( button => {
     button.addEventListener('click', () => {
@@ -19,19 +32,6 @@ numberButtons.forEach( button => {
         updateDisplay();
     })  
 })
-
-const operatorButtons = document.querySelectorAll('.operator');
-operatorButtons.forEach( button =>{
-    button.addEventListener('click', inputOperator)
-})
-
-const equalsBtn = document.querySelector('#equals');
-equalsBtn.addEventListener('click', equalFunction);
-
-const clearBtn = document.querySelector('#clear');
-clearBtn.addEventListener('click', clearDisplay);
-
-const display = document.querySelector('#display');
 
 function equalFunction(){
     let operands;
