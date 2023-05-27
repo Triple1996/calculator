@@ -1,63 +1,89 @@
-const ALL_CLEAR_TEXT = '0';
+const ALL_CLEAR_TEXT = 0;
+const ADDITION = '+';
+const SUBTRACTION = '-';
+const MULTIPLICATION = 'x'
+const DIVISION = '÷';
+
+const add = (a, b) => Number(a)+Number(b);
+const subtract = (a, b) => Number(a)-Number(b);
+const multiply = (a, b) => Number(a)*Number(b);
+const divide = (a, b) => Number(a)/Number(b);
+
+let displayValue = ALL_CLEAR_TEXT;
 
 const numberButtons = document.querySelectorAll('.number');
-const operatorButtons = document.querySelectorAll('.operator');
-const equalsBtn = document.querySelector('#equals');
-const clearBtn = document.querySelector('#clear');
-
-const display = document.querySelector('#display');
-
-clearBtn.addEventListener('click', clearDisplay);
-equalsBtn.addEventListener('click', equalFunction);
-
 numberButtons.forEach( button => {
     button.addEventListener('click', () => {
-        console.log("test");
-        if (display.textContent == ALL_CLEAR_TEXT) display.textContent = "";
-        display.textContent+=button.textContent;
-    })
+        if (displayValue == ALL_CLEAR_TEXT) displayValue = "";
+        displayValue += button.textContent;
+        updateDisplay();
+    })  
 })
 
+const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach( button =>{
     button.addEventListener('click', inputOperator)
 })
 
-function inputOperator(){
-    console.log(this.textContent + " was clicked!");
-    // do something
-}
+const equalsBtn = document.querySelector('#equals');
+equalsBtn.addEventListener('click', equalFunction);
 
-function clearDisplay(){
-    display.textContent = ALL_CLEAR_TEXT;
-}
+const clearBtn = document.querySelector('#clear');
+clearBtn.addEventListener('click', clearDisplay);
+
+const display = document.querySelector('#display');
 
 function equalFunction(){
-    console.log(this.textContent + " was clicked!");
-    // do something
+    let operands;
+    if (displayValue.includes(ADDITION)){
+        operands = displayValue.split(ADDITION);
+        displayValue = operate(operands[0], operands[1], ADDITION);
+        updateDisplay();
+    }
+    else if (displayValue.includes(SUBTRACTION)){
+        operands = displayValue.split(SUBTRACTION);
+        displayValue = operate(operands[0], operands[1], SUBTRACTION);
+        updateDisplay();
+    }
+    else if (displayValue.includes(MULTIPLICATION)){
+        operands = displayValue.split(MULTIPLICATION);
+        displayValue = operate(operands[0], operands[1], MULTIPLICATION);
+        updateDisplay();
+    }
+    else if (displayValue.includes(DIVISION)){
+        operands = displayValue.split(DIVISION);
+        displayValue = operate(operands[0], operands[1], DIVISION);
+        updateDisplay();
+    }
 }
 
-const add = (a, b) => a+b;
-const subtract = (a, b) => a-b;
-const mult = (a, b) => a*b;
-const divide = (a, b) => a/b;
-
-let firstNum;
-let operator;
-let secondNum;
-
 function operate (firstNum, secondNum, operator){
-
     switch (operator){
-        case "+":
+        case ADDITION:
             return add(firstNum, secondNum);
-        case "-": 
+        case SUBTRACTION: 
             return subtract(firstNum, secondNum);
-        case "*":
-            return mult(firstNum, secondNum);
-        case "/":
+        case MULTIPLICATION:
+            return multiply(firstNum, secondNum);
+        case DIVISION:
             return divide(firstNum, secondNum);
         default:
             console.error("No operator selected");
             break;
     }
+}
+
+function updateDisplay(){
+    display.textContent=displayValue;
+}
+
+function inputOperator(){
+    // Add handling for if user selects multiple operators
+    displayValue+=this.textContent;
+    updateDisplay();
+}
+
+function clearDisplay(){
+    displayValue = ALL_CLEAR_TEXT;
+    updateDisplay();
 }
