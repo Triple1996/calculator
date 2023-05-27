@@ -13,7 +13,7 @@ equalsBtn.addEventListener('click', equalFunction);
 numberButtons.forEach( button => {
     button.addEventListener('click', () => {
         console.log("test");
-        if (display.textContent == '0') display.textContent = "";
+        if (display.textContent == ALL_CLEAR_TEXT) display.textContent = "";
         display.textContent+=button.textContent;
     })
 })
