@@ -1,4 +1,4 @@
-const ALL_CLEAR_TEXT = 0;
+const ALL_CLEAR_TEXT = '0';
 const ADDITION = '+';
 const SUBTRACTION = '-';
 const MULTIPLICATION = 'x'
@@ -60,27 +60,30 @@ function equalFunction(){
 function operate (firstNum, secondNum, operator){
     switch (operator){
         case ADDITION:
-            return add(firstNum, secondNum);
+            return String(add(firstNum, secondNum));
         case SUBTRACTION: 
-            return subtract(firstNum, secondNum);
+            return String(subtract(firstNum, secondNum));
         case MULTIPLICATION:
-            return multiply(firstNum, secondNum);
+            return String(multiply(firstNum, secondNum))
         case DIVISION:
-            return divide(firstNum, secondNum);
+            return String(divide(firstNum, secondNum));
         default:
             console.error("No operator selected");
             break;
     }
 }
 
-function updateDisplay(){
-    display.textContent=displayValue;
-}
-
 function inputOperator(){
     // Add handling for if user selects multiple operators
+    if (/\D/.test(displayValue.slice(-1))) {
+        displayValue = displayValue.slice(0,displayValue.length-1);
+    }
     displayValue+=this.textContent;
     updateDisplay();
+}
+
+function updateDisplay(){
+    display.textContent=displayValue;
 }
 
 function clearDisplay(){
