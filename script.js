@@ -1,8 +1,8 @@
 const ALL_CLEAR_TEXT = '0';
-const ADDITION = '+';
-const SUBTRACTION = '-';
-const MULTIPLICATION = 'x'
-const DIVISION = '÷';
+const ADD = '+';
+const SUBTRACT = '-';
+const MULTIPLY = 'x'
+const DIVIDE = '÷';
 
 const add = (a, b) => Number(a)+Number(b);
 const subtract = (a, b) => Number(a)-Number(b);
@@ -35,37 +35,38 @@ numberButtons.forEach( button => {
 
 function equalFunction(){
     let operands;
-    if (displayValue.includes(ADDITION)){
-        operands = displayValue.split(ADDITION);
-        displayValue = operate(operands[0], operands[1], ADDITION);
+    if (displayValue.includes(ADD)){
+        operands = displayValue.split(ADD);
+        displayValue = operate(operands[0], operands[1], ADD);
         updateDisplay();
     }
-    else if (displayValue.includes(SUBTRACTION)){
-        operands = displayValue.split(SUBTRACTION);
-        displayValue = operate(operands[0], operands[1], SUBTRACTION);
+    // This will trigger for negative numbers. Use a regex like /[\d+-\d+]/
+    else if (displayValue.includes(SUBTRACT)){
+        operands = displayValue.split(SUBTRACT);
+        displayValue = operate(operands[0], operands[1], SUBTRACT);
         updateDisplay();
     }
-    else if (displayValue.includes(MULTIPLICATION)){
-        operands = displayValue.split(MULTIPLICATION);
-        displayValue = operate(operands[0], operands[1], MULTIPLICATION);
+    else if (displayValue.includes(MULTIPLY)){
+        operands = displayValue.split(MULTIPLY);
+        displayValue = operate(operands[0], operands[1], MULTIPLY);
         updateDisplay();
     }
-    else if (displayValue.includes(DIVISION)){
-        operands = displayValue.split(DIVISION);
-        displayValue = operate(operands[0], operands[1], DIVISION);
+    else if (displayValue.includes(DIVIDE)){
+        operands = displayValue.split(DIVIDE);
+        displayValue = operate(operands[0], operands[1], DIVIDE);
         updateDisplay();
     }
 }
 
 function operate (firstNum, secondNum, operator){
     switch (operator){
-        case ADDITION:
+        case ADD:
             return String(add(firstNum, secondNum));
-        case SUBTRACTION: 
+        case SUBTRACT: 
             return String(subtract(firstNum, secondNum));
-        case MULTIPLICATION:
+        case MULTIPLY:
             return String(multiply(firstNum, secondNum))
-        case DIVISION:
+        case DIVIDE:
             return String(divide(firstNum, secondNum));
         default:
             console.error("No operator selected");
