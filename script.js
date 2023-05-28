@@ -45,26 +45,26 @@ numberButtons.forEach( button => {
 
 function equalFunction(){
     let operands;
-    let split = locateOperand(displayValue)
+    let operatorIndex = locateOperand(displayValue)
 
     switch (displayValue.charAt(split)){
         case ADD:
-            operands = splitAt(displayValue, split);
+            operands = splitAt(displayValue, operatorIndex);
             displayValue = operate(operands[0], operands[1], ADD);
             updateDisplay();
             break;
         case SUBTRACT:
-            operands = splitAt(displayValue, split);
+            operands = splitAt(displayValue, operatorIndex);
             displayValue = operate(operands[0], operands[1], SUBTRACT);
             updateDisplay();
             break;
         case MULTIPLY:
-            operands = splitAt(displayValue, split);
+            operands = splitAt(displayValue, operatorIndex);
             displayValue = operate(operands[0], operands[1], MULTIPLY);
             updateDisplay();
             break;
         case DIVIDE:
-            operands = splitAt(displayValue, split);
+            operands = splitAt(displayValue, operatorIndex);
             if (operands[1] == 0) {
                 displayValue = ZERO_DIVISION_TEXT;}
             else {
