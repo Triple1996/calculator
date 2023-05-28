@@ -4,8 +4,8 @@ const ADD = '+';
 const SUBTRACT = '-';
 const MULTIPLY = 'x';
 const DIVIDE = '÷';
-const EQUATION_REGEX = /-?[0-9]+[+\-x÷]{1}[0-9]+/;
-const OPERATOR_REGEX = /[+\-x÷]/;
+const EQUATION_REGEX = /-?[0-9]+[+\-x÷]{1}[0-9]+/; //0 or 1 hyphens followed by 1 or more digits followed by a noperator followed by one or more digits
+const OPERATOR_REGEX = /[-+x÷]/; //any of the chars in brackets
 
 const add = (a, b) => Number(a)+Number(b);
 const subtract = (a, b) => Number(a)-Number(b);
