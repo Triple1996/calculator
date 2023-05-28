@@ -33,6 +33,7 @@ numberButtons.forEach( button => {
     })  
 })
 
+
 function equalFunction(){
     let operands;
     if (displayValue.includes(ADD)){
@@ -53,7 +54,8 @@ function equalFunction(){
     }
     else if (displayValue.includes(DIVIDE)){
         operands = displayValue.split(DIVIDE);
-        displayValue = operate(operands[0], operands[1], DIVIDE);
+        if (operands[1] == 0) displayValue = "Nice try";
+        else displayValue = operate(operands[0], operands[1], DIVIDE);
         updateDisplay();
     }
 }
@@ -76,7 +78,7 @@ function operate (firstNum, secondNum, operator){
 
 function inputOperator(){
     // Add handling for if user selects multiple operators
-    if (/\D/.test(displayValue.slice(-1))) {
+    if (/[+\-x÷]/.test(displayValue.slice(-1))) {
         displayValue = displayValue.slice(0,displayValue.length-1);
     }
     displayValue+=this.textContent;
