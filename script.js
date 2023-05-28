@@ -6,6 +6,7 @@ const MULTIPLY = 'x';
 const DIVIDE = '÷';
 const EQUATION_REGEX = /-?[0-9]+[+\-x÷]{1}[0-9]+/; //0 or 1 hyphens followed by 1 or more digits followed by a noperator followed by one or more digits
 const OPERATOR_REGEX = /[-+x÷]/; //any of the chars in brackets
+const MAX_DISPLAY_LENGTH = 8;
 
 const add = (a, b) => Number(a)+Number(b);
 const subtract = (a, b) => Number(a)-Number(b);
@@ -39,7 +40,7 @@ operatorButtons.forEach( button =>{
 const numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach( button => {
     button.addEventListener('click', () => {
-        if (displayValue.length == 8) return;
+        if (displayValue.length == MAX_DISPLAY_LENGTH) return;
         if (displayValue == ALL_CLEAR_TEXT 
             || displayValue == ZERO_DIVISION_TEXT
             || displayValue == "NaN") {displayValue = "";}
@@ -97,7 +98,7 @@ function operate (firstNum, secondNum, operator){
         case DIVIDE:
             return String(divide(firstNum, secondNum)).slice(0,8);
         default:
-            console.error("No operator selected");
+            console.error("operator not set correctly");
             break;
     }
 }
