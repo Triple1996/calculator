@@ -4,6 +4,8 @@ const ADD = '+';
 const SUBTRACT = '-';
 const MULTIPLY = 'x';
 const DIVIDE = '÷';
+const EQUATION_REGEX = /-?[0-9]+[+\-x÷]{1}[0-9]+/;
+const OPERATOR_REGEX = /[+\-x÷]/;
 
 const add = (a, b) => Number(a)+Number(b);
 const subtract = (a, b) => Number(a)-Number(b);
@@ -23,10 +25,10 @@ const display = document.querySelector('#display');
 const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach( button =>{
     button.addEventListener('click', () => {
-        if (/-?[0-9]+[+\-x÷]{1}[0-9]+/.test(displayValue)) {
+        if (EQUATION_REGEX.test(displayValue)) {
             equalFunction();
         }
-        if (/[+\-x÷]/.test(displayValue.slice(-1))) {
+        if (OPERATOR_REGEX.test(displayValue.slice(-1))) {
             displayValue = displayValue.slice(0,displayValue.length-1);
         }
         displayValue+=button.textContent;
@@ -47,6 +49,10 @@ numberButtons.forEach( button => {
 })
 
 function equalFunction(){
+    if (!EQUATION_REGEX.test(displayValue)) {
+        return;
+    }
+
     let operands;
     let operatorIndex = locateOperand(displayValue)
 
@@ -98,7 +104,7 @@ function operate (firstNum, secondNum, operator){
 
 function locateOperand(str){
     for (let i = str.length-1; i >= 0; i--){
-        if (/\D/.test(str.charAt(i)))
+        if (OPERATOR_REGEX.test(str.charAt(i)))
             return i;
     }
 }
