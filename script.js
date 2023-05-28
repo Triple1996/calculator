@@ -47,7 +47,7 @@ numberButtons.forEach( button => {
             || displayValue == "NaN") {displayValue = "";}
         displayValue += button.textContent;
         updateDisplay();
-    })  
+    })
 })
 
 function equalFunction(){
