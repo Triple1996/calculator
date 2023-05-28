@@ -19,7 +19,10 @@ const equalsBtn = document.querySelector('#equals');
 equalsBtn.addEventListener('click', equalFunction);
 
 const clearBtn = document.querySelector('#clear');
-clearBtn.addEventListener('click', clearDisplay);
+clearBtn.addEventListener('click', () => {
+    displayValue = ALL_CLEAR_TEXT;
+    updateDisplay();
+})
 
 const display = document.querySelector('#display');
 
@@ -27,11 +30,9 @@ const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach( button =>{
     button.addEventListener('click', () => {
         if (EQUATION_REGEX.test(displayValue)) {
-            equalFunction();
-        }
+            equalFunction();}
         if (OPERATOR_REGEX.test(displayValue.slice(-1))) {
-            displayValue = displayValue.slice(0,displayValue.length-1);
-        }
+            displayValue = displayValue.slice(0,displayValue.length-1);}
         displayValue+=button.textContent;
         updateDisplay();
     })
@@ -51,30 +52,25 @@ numberButtons.forEach( button => {
 
 function equalFunction(){
     if (!EQUATION_REGEX.test(displayValue)) {
-        return;
-    }
+        return;}
 
-    let operands;
     let operatorIndex = locateOperand(displayValue)
+    let operands = splitAt(displayValue, operatorIndex);
 
     switch (displayValue.charAt(operatorIndex)){
         case ADD:
-            operands = splitAt(displayValue, operatorIndex);
             displayValue = operate(operands[0], operands[1], ADD);
             updateDisplay();
             break;
         case SUBTRACT:
-            operands = splitAt(displayValue, operatorIndex);
             displayValue = operate(operands[0], operands[1], SUBTRACT);
             updateDisplay();
             break;
         case MULTIPLY:
-            operands = splitAt(displayValue, operatorIndex);
             displayValue = operate(operands[0], operands[1], MULTIPLY);
             updateDisplay();
             break;
         case DIVIDE:
-            operands = splitAt(displayValue, operatorIndex);
             if (operands[1] == 0) {
                 displayValue = ZERO_DIVISION_TEXT;}
             else {
@@ -90,13 +86,13 @@ function equalFunction(){
 function operate (firstNum, secondNum, operator){
     switch (operator){
         case ADD:
-            return String(add(firstNum, secondNum)).slice(0,8);
+            return String(add(firstNum, secondNum)).slice(0,MAX_DISPLAY_LENGTH);
         case SUBTRACT: 
-            return String(subtract(firstNum, secondNum)).slice(0,8);
+            return String(subtract(firstNum, secondNum)).slice(0,MAX_DISPLAY_LENGTH);
         case MULTIPLY:
-            return String(multiply(firstNum, secondNum)).slice(0,8)
+            return String(multiply(firstNum, secondNum)).slice(0,MAX_DISPLAY_LENGTH);
         case DIVIDE:
-            return String(divide(firstNum, secondNum)).slice(0,8);
+            return String(divide(firstNum, secondNum)).slice(0,MAX_DISPLAY_LENGTH);
         default:
             console.error("operator not set correctly");
             break;
@@ -116,9 +112,4 @@ function splitAt(str, index){
 
 function updateDisplay(){
     display.textContent=displayValue;
-}
-
-function clearDisplay(){
-    displayValue = ALL_CLEAR_TEXT;
-    updateDisplay();
 }
