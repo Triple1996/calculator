@@ -22,18 +22,26 @@ const display = document.querySelector('#display');
 
 const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach( button =>{
-    button.addEventListener('click', inputOperator)
+    button.addEventListener('click', () => {
+        // Add handling for if user selects multiple operators
+        if (/[+\-x÷]/.test(displayValue.slice(-1))) {
+            displayValue = displayValue.slice(0,displayValue.length-1);
+        }
+        displayValue+=button.textContent;
+        updateDisplay();
+    })
 })
 
 const numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach( button => {
     button.addEventListener('click', () => {
-        if (displayValue == ALL_CLEAR_TEXT || displayValue == "NaN" || displayValue == ZERO_DIVISION_TEXT) displayValue = "";
+        if (displayValue == ALL_CLEAR_TEXT 
+            || displayValue == ZERO_DIVISION_TEXT
+            || displayValue == "NaN") {displayValue = "";}
         displayValue += button.textContent;
         updateDisplay();
     })  
 })
-
 
 function equalFunction(){
     let operands;
@@ -55,8 +63,10 @@ function equalFunction(){
     }
     else if (displayValue.includes(DIVIDE)){
         operands = displayValue.split(DIVIDE);
-        if (operands[1] == 0) displayValue = ZERO_DIVISION_TEXT;
-        else displayValue = operate(operands[0], operands[1], DIVIDE);
+        if (operands[1] == 0) {
+            displayValue = ZERO_DIVISION_TEXT;}
+        else {
+            displayValue = operate(operands[0], operands[1], DIVIDE);}
         updateDisplay();
     }
 }
@@ -75,15 +85,6 @@ function operate (firstNum, secondNum, operator){
             console.error("No operator selected");
             break;
     }
-}
-
-function inputOperator(){
-    // Add handling for if user selects multiple operators
-    if (/[+\-x÷]/.test(displayValue.slice(-1))) {
-        displayValue = displayValue.slice(0,displayValue.length-1);
-    }
-    displayValue+=this.textContent;
-    updateDisplay();
 }
 
 function updateDisplay(){
