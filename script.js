@@ -2,7 +2,7 @@ const ALL_CLEAR_TEXT = '0';
 const ZERO_DIVISION_TEXT = "Nice try";
 const ADD = '+';
 const SUBTRACT = '-';
-const MULTIPLY = 'x'
+const MULTIPLY = 'x';
 const DIVIDE = '÷';
 
 const add = (a, b) => Number(a)+Number(b);
@@ -23,7 +23,9 @@ const display = document.querySelector('#display');
 const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach( button =>{
     button.addEventListener('click', () => {
-        // Add handling for if user selects multiple operators
+        if (/-?[0-9]+[+\-x÷]{1}[0-9]+/.test(displayValue)) {
+            equalFunction();
+        }
         if (/[+\-x÷]/.test(displayValue.slice(-1))) {
             displayValue = displayValue.slice(0,displayValue.length-1);
         }
@@ -35,6 +37,7 @@ operatorButtons.forEach( button =>{
 const numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach( button => {
     button.addEventListener('click', () => {
+        if (displayValue.length == 8) return;
         if (displayValue == ALL_CLEAR_TEXT 
             || displayValue == ZERO_DIVISION_TEXT
             || displayValue == "NaN") {displayValue = "";}
@@ -47,7 +50,7 @@ function equalFunction(){
     let operands;
     let operatorIndex = locateOperand(displayValue)
 
-    switch (displayValue.charAt(split)){
+    switch (displayValue.charAt(operatorIndex)){
         case ADD:
             operands = splitAt(displayValue, operatorIndex);
             displayValue = operate(operands[0], operands[1], ADD);
@@ -80,13 +83,13 @@ function equalFunction(){
 function operate (firstNum, secondNum, operator){
     switch (operator){
         case ADD:
-            return String(add(firstNum, secondNum));
+            return String(add(firstNum, secondNum)).slice(0,8);
         case SUBTRACT: 
-            return String(subtract(firstNum, secondNum));
+            return String(subtract(firstNum, secondNum)).slice(0,8);
         case MULTIPLY:
-            return String(multiply(firstNum, secondNum))
+            return String(multiply(firstNum, secondNum)).slice(0,8)
         case DIVIDE:
-            return String(divide(firstNum, secondNum));
+            return String(divide(firstNum, secondNum)).slice(0,8);
         default:
             console.error("No operator selected");
             break;
@@ -95,11 +98,8 @@ function operate (firstNum, secondNum, operator){
 
 function locateOperand(str){
     for (let i = str.length-1; i >= 0; i--){
-        if (/\D/.test(str.charAt(i))) {
-            return i; }
-        else {
-            console.log(str.charAt(i) + ": nope");
-        }
+        if (/\D/.test(str.charAt(i)))
+            return i;
     }
 }
 
