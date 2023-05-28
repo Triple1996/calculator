@@ -2,6 +2,7 @@ html, body{
     height: 95%;
     width: 95%;
     font-family: system-ui;
+    background: grey;
 }
 
 body {
@@ -29,6 +30,7 @@ body {
     border: 2px solid black;
     height: 80px;
     margin-bottom: 15px;
+    background: lightgray;
 }
 
 #grid-buttons{
@@ -42,6 +44,7 @@ button{
     font-family: inherit;
     font-size: x-large;
     border-radius: 5px;
+    background: darkgray;
 }
 footer {
     width: 100%;
