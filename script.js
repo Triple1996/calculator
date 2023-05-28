@@ -1,4 +1,5 @@
 const ALL_CLEAR_TEXT = '0';
+const ZERO_DIVISION_TEXT = "Nice try";
 const ADD = '+';
 const SUBTRACT = '-';
 const MULTIPLY = 'x'
@@ -27,7 +28,7 @@ operatorButtons.forEach( button =>{
 const numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach( button => {
     button.addEventListener('click', () => {
-        if (displayValue == ALL_CLEAR_TEXT) displayValue = "";
+        if (displayValue == ALL_CLEAR_TEXT || displayValue == "NaN" || displayValue == ZERO_DIVISION_TEXT) displayValue = "";
         displayValue += button.textContent;
         updateDisplay();
     })  
@@ -54,7 +55,7 @@ function equalFunction(){
     }
     else if (displayValue.includes(DIVIDE)){
         operands = displayValue.split(DIVIDE);
-        if (operands[1] == 0) displayValue = "Nice try";
+        if (operands[1] == 0) displayValue = ZERO_DIVISION_TEXT;
         else displayValue = operate(operands[0], operands[1], DIVIDE);
         updateDisplay();
     }
