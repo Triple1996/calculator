@@ -45,31 +45,35 @@ numberButtons.forEach( button => {
 
 function equalFunction(){
     let operands;
-    if (displayValue.includes(ADD)){
-        operands = displayValue.split(ADD);
-        displayValue = operate(operands[0], operands[1], ADD);
-        updateDisplay();
-    }
-    // This will trigger for negative numbers. Use a regex like /[\d+-\d+]/
-    else if (displayValue.includes(SUBTRACT)){
-        let split = locateOperand(displayValue);
-        operands = [displayValue.slice(0,split-1), displayValue.slice(split)]
-        // operands = displayValue.split(SUBTRACT);
-        displayValue = operate(operands[0], operands[1], SUBTRACT);
-        updateDisplay();
-    }
-    else if (displayValue.includes(MULTIPLY)){
-        operands = displayValue.split(MULTIPLY);
-        displayValue = operate(operands[0], operands[1], MULTIPLY);
-        updateDisplay();
-    }
-    else if (displayValue.includes(DIVIDE)){
-        operands = displayValue.split(DIVIDE);
-        if (operands[1] == 0) {
-            displayValue = ZERO_DIVISION_TEXT;}
-        else {
-            displayValue = operate(operands[0], operands[1], DIVIDE);}
-        updateDisplay();
+    let split = locateOperand(displayValue)
+
+    switch (displayValue.charAt(split)){
+        case ADD:
+            operands = splitAt(displayValue, split);
+            displayValue = operate(operands[0], operands[1], ADD);
+            updateDisplay();
+            break;
+        case SUBTRACT:
+            operands = splitAt(displayValue, split);
+            displayValue = operate(operands[0], operands[1], SUBTRACT);
+            updateDisplay();
+            break;
+        case MULTIPLY:
+            operands = splitAt(displayValue, split);
+            displayValue = operate(operands[0], operands[1], MULTIPLY);
+            updateDisplay();
+            break;
+        case DIVIDE:
+            operands = splitAt(displayValue, split);
+            if (operands[1] == 0) {
+                displayValue = ZERO_DIVISION_TEXT;}
+            else {
+                displayValue = operate(operands[0], operands[1], DIVIDE);}
+            updateDisplay();
+            break;
+        default:
+            console.error("No operator found");
+            break;
     }
 }
 
@@ -90,16 +94,17 @@ function operate (firstNum, secondNum, operator){
 }
 
 function locateOperand(str){
-    console.log("seeking");
     for (let i = str.length-1; i >= 0; i--){
-        if (str.slice(i) === "-") {
-            console.log(i);
-            return i;
-        }
+        if (/\D/.test(str.charAt(i))) {
+            return i; }
         else {
             console.log(str.charAt(i) + ": nope");
         }
     }
+}
+
+function splitAt(str, index){
+    return [str.slice(0,index), str.slice(index+1)];
 }
 
 function updateDisplay(){
